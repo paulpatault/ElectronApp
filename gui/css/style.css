@@ -1,0 +1,43 @@
+@import url("button.css");
+@import url("modal.css");
+@import url("inputs.css");
+@import url("images.css");
+
+
+
+.left{
+  text-align: left; 
+  width:75%; 
+  display: inline-block;
+}
+
+.right {
+  text-align: right; 
+  width:20%;  
+  display: inline-block;
+}
+
+.date {
+  font-size: x-small;
+  float: right;
+}
+
+.back-yellow {
+  background-color: #ffffcc;
+}
+
+.back-red {
+  background-color: #ffcccc;
+}
+
+.back-purple {
+  background-color: #e6ccff;
+}
+
+.back-blue {
+  background-color: #cce6ff;
+}
+
+.back-green {
+  background-color: #ccffcc;
+}

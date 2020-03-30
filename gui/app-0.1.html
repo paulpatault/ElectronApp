@@ -1,0 +1,83 @@
+<head>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="linkers/weather.js"></script>
+</head>
+
+<body>
+    <br>
+    <div class="container">
+        <div class="card mb-4" style="max-width: 18rem;">
+            <h6 class="card-header back-yellow">Cours 1</h6>
+            <div class="card-body" style="text-align: justify;">
+                <div class="card" style="width: 18rem;">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="card-body">
+                                <h6 class="card-title">Task 1</h6>
+                                <p class="card-text small">Some quick example text to build on the card title and make
+                                    up the
+                                    bulk of the card's content.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="card-body">
+                                <h6 class="card-title">Task 2</h6>
+                                <p class="card-text small">Some quick example text to build on the card title and make
+                                    up the
+                                    bulk of the card's content.
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-4" style="max-width: 18rem;">
+            <h6 class="card-header back-green">Cours 2</h6>
+            <div class="card-body" style="text-align: justify;">
+                <div class="card" style="width: 18rem;">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="card-body">
+                                <h6 class="card-title">Task 1</h6>
+                                <p class="card-text small">Some quick example text to build on the card title and make
+                                    up the
+                                    bulk of the card's content.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="card-body">
+                                <h6 class="card-title">Task 2</h6>
+                                <p class="card-text small">Some quick example text to build on the card title and make
+                                    up the
+                                    bulk of the card's content.
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <br>
+        <label>Enter your city here</label>
+        <input id="city" type="text" placeholder="City" />
+        <button class="btn btn-success" onclick="get_weather()">Go!</button>
+
+    </div>
+
+    <body>

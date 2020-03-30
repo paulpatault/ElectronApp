@@ -1,0 +1,89 @@
+.center {
+    text-align: center;
+}
+
+p {
+    margin-bottom: 0px;
+    padding: 0px;
+}
+
+p.red {
+    color: red;
+}
+
+p.red:hover {
+    color: black;
+    background-color: #ffcccc;
+}
+
+p.orange {
+    color: orange;
+}
+
+p.orange:hover {
+    color: black;
+    background-color: #ffe6cc;
+}
+
+p.yellow {
+    color: yellow;
+}
+
+p.yellow:hover {
+    color: black;
+    background-color: #ffffcc;
+}
+
+p.yellow2 {
+    color: yellowgreen;
+}
+
+p.yellow2:hover {
+    color: black;
+    background-color: #f2ffcc;
+}
+
+p.green {
+    color: green;
+}
+
+p.green:hover {
+    color: black;
+    background-color: #ccffcc;
+}
+
+p.green2 {
+    color: cadetblue;
+}
+
+p.green2:hover {
+    color: black;
+    background-color: #d6f5f5;
+}
+
+p.blue {
+    color: blue;
+}
+
+p.blue:hover {
+    color: black;
+    background-color: #cce6ff;
+}
+
+p.blue2 {
+    color: blueviolet;
+}
+
+p.blue2:hover {
+    color: black;
+    background-color: #d6d6f5;
+}
+
+p.purple {
+    color: purple;
+}
+
+p.purple:hover {
+    color: black;
+    background-color: #e6ccff;
+}

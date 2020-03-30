@@ -1,0 +1,40 @@
+
+input.small {
+    font-size: small;
+}
+
+input.x-small {
+    font-size: x-small;
+}
+
+input.close {
+  position:absolute;
+  right:4;
+  top: 10;
+  width: 1.5rem;
+}
+
+input.topcorner {
+  position:absolute;
+  top:0;
+  right:0;
+  width: 1.7rem;
+  margin-bottom: 0rem;
+  padding-bottom: 0;
+}
+
+input.addField {
+  margin: 5;
+  width: 20;
+  height: 20; 
+}
+
+input.addField:hover {
+  background-color: #ffcccc;
+}
+
+input.validation {
+  width: 25;
+  height: 25; 
+  float: right;
+}

@@ -1,0 +1,24 @@
+{
+  "name": "name-me",
+  "version": "1.0.0",
+  "description": "A minimal Electron application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-packager . name-me && cp app-icon.icns name-me-darwin-x64/name-me.app/Contents/Resources/electron.icns"
+  },
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^1.8.8",
+    "electron-packager": "^14.2.1"
+  },
+  "dependencies": {
+    "electron-localshortcut": "^3.2.1",
+    "fs": "0.0.1-security",
+    "jquery": "^3.4.1",
+    "mousetrap": "^1.6.5",
+    "popper": "^1.0.1",
+    "python-shell": "^1.0.7",
+    "xmlhttprequest": "^1.8.0"
+  }
+}
