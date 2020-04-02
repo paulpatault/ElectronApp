@@ -1,5 +1,9 @@
 {
-    "courses": [
+    "windowBounds": {
+        "width": 903,
+        "height": 600
+    },
+    "data": [
         {
             "name": "Algebre",
             "color": "yellow",
@@ -12,11 +16,6 @@
                 {
                     "content": "REVOIR ALGEBRE",
                     "date": "14/03",
-                    "done": false
-                },
-                {
-                    "content": "coucou",
-                    "date": "06/11",
                     "done": false
                 }
             ]
@@ -47,13 +46,8 @@
                     "done": true
                 },
                 {
-                    "content": "task1",
-                    "date": "06/06",
-                    "done": false
-                },
-                {
-                    "content": "aa",
-                    "date": "06/11",
+                    "content": "coucouu",
+                    "date": "23/04",
                     "done": false
                 }
             ]

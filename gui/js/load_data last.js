@@ -75,10 +75,27 @@ function loadData(xhttp) {
 
     for (const course of courses) {
 
-        mainPageOut += '<div class="card mb-4" style="max-width: 18rem;">';
+        mainPageOut += '<div class="card mb-4" style="max-width: 18rem;" id>';
         mainPageOut += '<h6 class="card-header back-' + course["color"] + '">';
         mainPageOut += course["name"];
-        mainPageOut += '<img src="images/icons/50/plus.png" class="right resize1">';
+        /* 
+            class="collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" 
+
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#addTaskModal">
+                <div class="input-group input-group-sm mb-3 form-row">
+                    <img src="images/icons/50/menu.png" class="modal_att" />
+                    <input type="text" class="form-control" aria-label="Small"
+                        aria-describedby="inputGroup-sizing-xs" placeholder="Field Name">
+                </div>
+                <div class="input-group input-group-sm mb-3 form-row">
+                    <img src="images/icons/40/palette.png" class="modal_att" />
+                    <input type="color" class="dropdown-item hidden small form-control" aria-label="Small"
+                        aria-describedby="inputGroup-sizing-sm" value="#ccffcc">
+                </div>
+            </div>
+
+        */
+        mainPageOut += '<img src="images/icons/50/plus.png" class="right resize1 collapse">';
         mainPageOut += '</h6>';
         mainPageOut += '<div class="card-body">';
 

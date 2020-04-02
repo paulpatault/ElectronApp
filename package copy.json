@@ -1,18 +1,11 @@
 {
-  "name": "Todo-App",
+  "name": "name-me",
   "version": "1.0.0",
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder"
-  },
-  "build": {
-    "appId": "com.patault.todo_app",
-    "mac": {
-      "category": "rand.category.type"
-    }
+    "build": "electron-packager . TODO_APP"
   },
   "license": "CC0-1.0",
   "devDependencies": {
