@@ -66,13 +66,13 @@
                     <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#addTaskModal">
                         <div class="input-group input-group-sm mb-3 form-row">
                             <img src="images/icons/50/menu.png" class="modal_att" />
-                            <input id="new-field-form" type="text" class="form-control" aria-label="Small"
+                            <input type="text" class="form-control" aria-label="Small"
                                 aria-describedby="inputGroup-sizing-xs" placeholder="Field Name">
                         </div>
                         <div class="input-group input-group-sm mb-3 form-row">
                             <img src="images/icons/40/palette.png" class="modal_att" />
-                            <input id="color-form" type="color" class="dropdown-item hidden small form-control"
-                                aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="#ccffcc">
+                            <input type="color" class="dropdown-item hidden small form-control" aria-label="Small"
+                                aria-describedby="inputGroup-sizing-sm" value="#ccffcc">
                         </div>
                     </div>
 
@@ -80,11 +80,11 @@
                         Add Task
                         <input type="image" src="images/icons/50/validation.png" class="validation" data-dismiss="modal"
                             onclick="
-                                        const { writer_ } = require('../writer.js'); 
-                                        writer_(); 
-                                        const { loadData_ } = require('../load_data.js');
-                                        loadData_();
-                                    " />
+                                const { writer_ } = require('../writer.js'); 
+                                writer_(); 
+                                const { loadData_ } = require('../load_data.js');
+                                loadData_();
+                                " />
                     </div>
 
                 </div>

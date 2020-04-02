@@ -1,27 +1,148 @@
-const { loadData } = require('./load_data.js');
-const { Store } = require('./store');
+class Course {
+    constructor(data) {
+        this.data = data;
+    }
 
-function submitFunc() {
-    write();
-    location.reload();
+    mset(ndata) {
+        this.data = ndata
+    }
+
+    getData() {
+        return this.data
+    }
+
+    findIdx(tofind) {
+        var idx = 0;
+        for (const course of this.data) {
+            if (tofind == course.name) {
+                return idx;
+            }
+            idx += 1;
+        }
+        return -1;
+    }
+
+    addTask(idx, task) {
+        this.data[idx]["tasks"].push(task);
+        return this.data
+    }
+
+    addCourse(name, color, tasks) {
+        var course = {
+            "name": name,
+            "color": color,
+            "tasks": tasks
+        };
+        this.data.push(course);
+        return this.data;
+    }
 }
 
-function findIdx(tofind, courses) {
-    var idx = 0;
-    for (const course of courses) {
-        //console.log(course["name"])
-        console.log(typeof course)
-        if (tofind == course.name) {
-            console.log(course["name"])
-            return idx;
+class Utils {
+    static cleanDate(date) {
+        if (date == "") {
+            return "../..";
         }
-        idx += 1;
+        var month = date.substring(5, 7);
+        var day = date.substring(8);
+        return day + "/" + month;
     }
-    return -1;
+}
+
+class Inputs {
+    static course(courses) {
+        var course = document.getElementById('field-form').value;
+        if (course != "unselected") {
+            return {
+                n_courses: courses.getData(),
+                course: course,
+                add: false
+            };
+        }
+        course = document.getElementById('new-field-form').value;
+
+        if (course == "") {
+            alert("Please select a field");
+            return {
+                n_courses: courses.getData(),
+                course: null,
+                add: true
+            };;
+        }
+
+        var color = document.getElementById('color-form').value;
+        courses.addCourse(course, color, []);
+        return {
+            n_courses: courses.getData(),
+            course: course,
+            add: true
+        };
+    }
+
+    static task() {
+        var task_input = document.getElementById('task-input').value;
+        var date_input = document.getElementById('date-input').value;
+        var done_input = document.getElementById('todo-done').value;
+
+        if (task_input == "") {
+            alert('Please give a name to your task')
+            return null;
+        }
+        if (done_input == "") {
+            done_input = 'false';
+        }
+
+        var task = {
+            "content": task_input,
+            "date": Utils.cleanDate(date_input),
+            "done": (done_input == 'true')
+        };
+
+        return task;
+    }
 }
 
 function writer_() {
-    console.log('yes! you\'re in :D');
+    const { Store } = require('./store.js');
+
+    const data = new Store({
+        configName: 'user-preferences',
+        defaults: {}
+    });
+
+    let { courses } = data.get('data');
+
+    let kourseC = new Course(courses);
+
+    var new_task = Inputs.task();
+    if (!new_task) {
+        return;
+    }
+
+    var { n_courses, course, add } = Inputs.course(kourseC);
+
+    if (!course) {
+        return;
+    }
+
+    var idx;
+    if (add) {
+        kourseC.mset(n_courses);
+    }
+
+    idx = kourseC.findIdx(course);
+
+    if (idx == -1) {
+        alert('[SYSTEM ERROR] Please try again...');
+        return;
+    }
+
+    kourseC.addTask(idx, new_task);
+    data.set('data', { "courses": kourseC.getData() });
+}
+
+function checker_() {
+    const { Store } = require('./store.js');
 
     const data = new Store({
         configName: 'user-preferences',
@@ -29,75 +150,20 @@ function writer_() {
     });
     let { courses } = data.get('data');
 
-    //console.log(typeof courses);
-    //courses = Array(courses);
-    //console.log(typeof courses);
-    var new_task = taskInput();
-    //console.log(new_task);
-    var course = courseInput();
-    //console.log(course);
-
-    let idx = findIdx(course, courses);
-    console.log('idx = ' + String(idx));
-    if (idx == -1) {
-        console.console.warn('| idx == -1 |');
-        return;
-    }
-    courses = addTask(courses, idx, new_task);
-
-    /* for (const course of courses) {
+    for (const course of courses) {
         for (const task of course["tasks"]) {
 
+            var id = String(task["content"]) + String(task["date"]);
+            if (document.getElementById(id).checked) {
+                task["done"] = true;
+            } else {
+                task["done"] = false;
+            }
         }
-    } */
+    }
 
     data.set('data', { "courses": courses });
-    //loadData();
 }
 
-module.exports = { writer_ };
+module.exports = { writer_, checker_ };
 
-function addTask(course, idx, task) {
-    //console.log(course[idx]["tasks"]);
-    //console.log(typeof course[idx]);
-    course[idx]["tasks"].push(task);
-    return course
-}
-
-function courseInput() {
-    var course = document.getElementById('field-form').value;
-
-    return course;
-}
-
-function addCourse(file, name, color, tasks) {
-    var course = {
-        "name": name,
-        "color": color,
-        "tasks": tasks
-    }
-    course = addTask(course, "en plus...");
-    file["courses"].push(course);
-    return file;
-}
-
-
-function cleanDate(date) {
-    var month = date.substring(5, 7);
-    var day = date.substring(8);
-    return day + "/" + month;
-}
-
-function taskInput() {
-    var task_input = document.getElementById('task-input');
-    var date_input = document.getElementById('date-input');
-    var done_input = document.getElementById('todo-done');
-
-    var task = {
-        "content": task_input.value,
-        "date": cleanDate(date_input.value),
-        "done": (done_input.value == 'true')
-    };
-
-    return task;
-}

@@ -1,0 +1,6 @@
+
+build :
+    ./node_modules/.bin/electron-builder build -m
+
+run :
+    npm start

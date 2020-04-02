@@ -2,52 +2,8 @@ const { Store } = require('./store.js');
 var jsonfile;
 
 
-function checker_() {
-    var xhttp;
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            checker__(this);
-        }
-    };
-    xhttp.open("GET", "data/.test.json", true);
-    xhttp.send();
-}
-
-function checker__(xhttp) {
-    jsonfile = JSON.parse(xhttp.responseText);
-
-    var courses = jsonfile.courses;
-
-    console.log('coucou');
-    for (const course of courses) {
-        for (const task of course["tasks"]) {
-
-            var id = String(task["content"]);
-            if (document.getElementById(id).checked) {
-                task["done"] = true;
-            } else {
-                task["done"] = false;
-            }
-        }
-    }
-
-    var obj = JSON.stringify(jsonfile);
-    fs.writeFile("gui/data/.test.json", obj, function (err) {
-        if (err) {
-            console.log('[ERROR] couldn\'t access file...');
-            return console.log(err);
-        }
-        else {
-            console.log("The file was saved!");
-        }
-    });
-    majData__();
-}
-
 function loadData_() {
-    //jsonfile = JSON.parse(xhttp.responseText);
-    //var courses = jsonfile.courses;
+
     const store = new Store({
         configName: 'user-preferences',
         defaults: {}
@@ -55,17 +11,18 @@ function loadData_() {
     let { courses } = store.get('data');
 
 
-    console.log(courses)
+    //console.log(courses)
 
 
     var mainPageOut = '';
     var idx = 0;
-    var fieldFormOut = '<option selected>Field</option>';
+    var fieldFormOut = '<option value="unselected" selected>Field</option>';
 
     for (const course of courses) {
 
         mainPageOut += '<div class="card mb-4" style="max-width: 18rem;" id>';
-        mainPageOut += '<h6 class="card-header back-' + course["color"] + '">';
+        //mainPageOut += '<h6 class="card-header back-' + course["color"] + '">';
+        mainPageOut += '<h6 class="card-header" style="background-color: ' + course["color"] + ';">';
         mainPageOut += course["name"];
         /* 
             class="collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" 
@@ -83,8 +40,10 @@ function loadData_() {
                 </div>
             </div>
 
+            <input type="image" src="images/icons/50/plus.png" class="topcorner" data-toggle="modal"
+        data-target="#addTaskModal" />
         */
-        mainPageOut += '<img src="images/icons/50/plus.png" class="right resize1 collapse">';
+        mainPageOut += '<input type="image" src="images/icons/50/plus.png" class="right resize1 collapse"/>';
         mainPageOut += '</h6>';
         mainPageOut += '<div class="card-body">';
 
@@ -96,7 +55,14 @@ function loadData_() {
             mainPageOut += '<form style="margin-bottom: 0;">';
             mainPageOut += '<div class="form-row form-check">';
             mainPageOut += '<div class="col-auto left">';
-            mainPageOut += '<input type="checkbox" class="form-check-input x-small" onclick="checker_()" id="' + task["content"] + '"';
+
+            const cmd = "const { checker_ } = require('../writer.js'); checker_(); const { loadData_ } = require('../load_data.js'); loadData_();";
+            const id = String(task["content"]) + String(task["date"])
+            mainPageOut += '<input type="checkbox" class="form-check-input x-small" onclick="' + cmd + '" id="' + id + '"';
+
+
+
+
 
             if (task["done"]) {
                 mainPageOut += 'checked>';

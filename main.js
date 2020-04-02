@@ -15,7 +15,7 @@ const store = new Store({
     data: {
       courses: [{
         "name": "Algebre",
-        "color": "yellow",
+        "color": "#ffffcc",
         "tasks": [
           {
             "content": "EXERCICES 9+10",
@@ -31,7 +31,7 @@ const store = new Store({
       },
       {
         "name": "Japonais",
-        "color": "red",
+        "color": "#ffcccc",
         "tasks": [
           {
             "content": "PREPARER SPEECH",
@@ -47,7 +47,7 @@ const store = new Store({
       },
       {
         "name": "App",
-        "color": "green",
+        "color": "#ccffcc",
         "tasks": [
           {
             "content": "Modal in modal as scheme",
