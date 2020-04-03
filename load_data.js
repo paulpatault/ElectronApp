@@ -8,10 +8,7 @@ function loadData_() {
         configName: 'user-preferences',
         defaults: {}
     });
-    let { courses } = store.get('data');
-
-
-    //console.log(courses)
+    const { courses } = store.get('data');
 
 
     var mainPageOut = '';
@@ -43,7 +40,13 @@ function loadData_() {
             <input type="image" src="images/icons/50/plus.png" class="topcorner" data-toggle="modal"
         data-target="#addTaskModal" />
         */
-        mainPageOut += '<input type="image" src="images/icons/50/plus.png" class="right resize1 collapse"/>';
+
+        mainPageOut += '<input type="image" src="images/icons/50/plus.png" class="right resize1" ';
+        mainPageOut += 'data-toggle="modal" data-target="#zoomOnField"';
+        const arg = "\'" + String(course["name"]) + "\'";
+        const action = "const { loadData_zoomField } = require('../load_data.js'); loadData_zoomField(" + arg + "); ";
+        mainPageOut += 'onclick="' + action + '"/>';
+
         mainPageOut += '</h6>';
         mainPageOut += '<div class="card-body">';
 
@@ -79,6 +82,70 @@ function loadData_() {
     }
     document.getElementById('main-page').innerHTML = mainPageOut;
     document.getElementById('field-form').innerHTML = fieldFormOut;
+
+    //loadData_zoomField("");
+}
+
+function loadData_zoomField(caller) {
+
+    console.log("Caller : " + String(caller));
+    const store = new Store({
+        configName: 'user-preferences',
+        defaults: {}
+    });
+
+    const { courses } = store.get('data');
+
+    var zoomModalContent = '';
+
+    for (const course of courses) {
+        if (course["name"] == caller) {
+            console.warn('in !');
+
+            zoomModalContent += '<h6 class="card-header" style="background-color: ' + course["color"] + ';">';
+            zoomModalContent += course["name"];
+
+            zoomModalContent += '<input type="image" src="images/icons/50/back.png" class="zoomFieldBack" ';
+            zoomModalContent += 'data-toggle="modal" data-target="#zoomOnField"/>';
+            zoomModalContent += '</h6>';
+
+            zoomModalContent += '<div class="card-body">';
+            /* 
+                        zoomModalContent += '<div class="input-group input-group-sm mb-3 form-row">';
+                        zoomModalContent += '<img src="images/icons/50/corbeille.png" class="zoomField" />';
+                        //zoomModalContent += '<input id="task-input" type="text" class="form-control" aria-label="Small"';
+                        //zoomModalContent += 'aria-describedby="inputGroup-sizing-xs" placeholder="Task Name">';
+                        zoomModalContent += '</div>';
+             */
+
+            for (const task of course["tasks"]) {
+                zoomModalContent += '<form style="margin-bottom: 0;">';
+                zoomModalContent += '<div class="form-row form-check">';
+                zoomModalContent += '<div class="col-auto left">';
+
+                const sub_id = String(task["content"])
+                const arg = task["content"] + course["name"];
+                const args = "\'" + String(task["content"]) + "\'" + "," + "\'" + String(course["name"]) + "\'"
+                const cmd = "const { del_ } = require('../writer.js'); del_(" + args + "); const { loadData_ } = require('../load_data.js'); loadData_();";
+                const id = "modal-" + sub_id + String(task["date"]);
+
+                zoomModalContent += '<input type="image" src="images/icons/50/corbeille.png" class="zoomField"';
+                zoomModalContent += 'onclick="' + cmd + '" id="' + id + '">';
+
+
+                if (task["done"]) {
+                    zoomModalContent += '<label class="form-check-label small" style="text-decoration: line-through;" for="">';
+                } else {
+                    zoomModalContent += '<label class="form-check-label small" for="">';
+                }
+                zoomModalContent += task["content"] + '</label></div>';
+                //zoomModalContent += '<div class="date right">' + task["date"] + '</div>';
+                zoomModalContent += '</div></form>';
+            }
+            zoomModalContent += '</div>';
+        }
+    }
+    document.getElementById('zoomModalContent').innerHTML = zoomModalContent;
 }
 
 
@@ -87,7 +154,7 @@ loadData_()
 //setInterval(loadData(), 1000)
 //setInterval(function () { alert("Hello"); }, 3000);
 
-module.exports = { loadData_ };
+module.exports = { loadData_, loadData_zoomField };
 /*
 <form style="margin-bottom: 0;">
     <div class="form-row form-check">

@@ -36,6 +36,10 @@ class Course {
         this.data.push(course);
         return this.data;
     }
+
+    check() {
+
+    }
 }
 
 class Utils {
@@ -46,6 +50,16 @@ class Utils {
         var month = date.substring(5, 7);
         var day = date.substring(8);
         return day + "/" + month;
+    }
+
+    static mremove(arr, value) {
+        let res = [];
+        for (const elt of arr) {
+            if (elt["content"] != value) {
+                res.push(elt);
+            }
+        }
+        return res;
     }
 }
 
@@ -165,5 +179,25 @@ function checker_() {
     data.set('data', { "courses": courses });
 }
 
-module.exports = { writer_, checker_ };
+function del_(task_content, course) {
+
+    const { Store } = require('./store.js');
+
+    const data = new Store({
+        configName: 'user-preferences',
+        defaults: {}
+    });
+
+    let { courses } = data.get('data');
+
+    let kourseC = new Course(courses);
+
+    var idx = kourseC.findIdx(course)
+
+    courses[idx]["tasks"] = Utils.mremove(courses[idx]["tasks"], task_content);
+
+    data.set('data', { "courses": courses });
+}
+
+module.exports = { writer_, checker_, del_ };
 

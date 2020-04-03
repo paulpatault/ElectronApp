@@ -8,16 +8,16 @@ input.x-small {
 }
 
 input.close {
-  position:absolute;
-  right:4;
+  position: absolute;
+  right: 4;
   top: 10;
   width: 1.5rem;
 }
 
 input.topcorner {
-  position:absolute;
-  top:0;
-  right:0;
+  position: absolute;
+  top: 0;
+  right: 0;
   width: 1.7rem;
   margin-bottom: 0rem;
   padding-bottom: 0;
@@ -44,8 +44,24 @@ input.resize1 {
   width: 1.5rem;
 }
 
+input.zoomFieldBack {
+
+  width: 1.3rem;
+
+  position: absolute;
+  right: 10;
+  top: 13;
+}
+
 input.right {
   position: absolute;
   right: 4;
   top: 10;
+}
+
+input.zoomField {
+  width: 20;
+  height: 20; 
+  margin-top: 3;
+  margin-right : 3;
 }
