@@ -52,10 +52,10 @@ class Utils {
         return day + "/" + month;
     }
 
-    static mremove(arr, value) {
+    static mremove(arr, value, at) {
         let res = [];
         for (const elt of arr) {
-            if (elt["content"] != value) {
+            if (elt[at] != value) {
                 res.push(elt);
             }
         }
@@ -194,7 +194,11 @@ function del_(task_content, course) {
 
     var idx = kourseC.findIdx(course)
 
-    courses[idx]["tasks"] = Utils.mremove(courses[idx]["tasks"], task_content);
+    courses[idx]["tasks"] = Utils.mremove(courses[idx]["tasks"], task_content, "content");
+
+    if (courses[idx]["tasks"].length == 0) {
+        courses = Utils.mremove(courses, course, "name");
+    }
 
     data.set('data', { "courses": courses });
 }
