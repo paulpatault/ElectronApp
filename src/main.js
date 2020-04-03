@@ -2,7 +2,7 @@ const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
 
-const { Store } = require('./src/store.js');
+const { Store } = require('./store.js');
 
 let mainWindow
 
@@ -75,7 +75,7 @@ function createWindow() {
   //mainWindow.setResizable(false);
 
   mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'src/gui/app-0.4.html'),
+    pathname: path.join(__dirname, '/gui/app-0.4.html'),
     protocol: 'file:',
     slashes: true
   }));

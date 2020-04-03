@@ -1,6 +1,7 @@
 
 build :
     ./node_modules/.bin/electron-builder build -m
+    npm run package-mac
 
 run :
     npm start
