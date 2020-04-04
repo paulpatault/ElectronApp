@@ -14,8 +14,7 @@ npm start
 
 ## Preview
 
-![Preview][1]
-[1]: preview/example1.png "Creative Commons licensed"
+![Preview](preview/example1.png)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
