@@ -34,8 +34,9 @@ input.addField:hover {
 }
 
 input.validation {
-  width: 25;
-  height: 25; 
+  margin-left: 3;
+  width: 20;
+  height: 20; 
   float: right;
 }
 
