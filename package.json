@@ -1,6 +1,6 @@
 {
   "name": "electron-todo-app",
-  "productName": "Electron todo app",
+  "productName": "Todo app",
   "author": {
     "name": "Paul Patault",
     "email": "p.patault@gmail.com"
@@ -11,7 +11,7 @@
   "scripts": {
     "start": "electron .",
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=./build/electron.icns --prune=true --out=release-builds",
-    "create-installer-mac": "electron-installer-dmg ./release-builds/Electron\\ todo\\ app-darwin-x64/Electron\\ todo\\ app.app electron-todo-app --out=release-builds --overwrite --icon=./build/electron.icns"
+    "create-installer-mac": "electron-installer-dmg ./release-builds/Todo\\ app-darwin-x64/Todo\\ app.app electron-todo-app --out=release-builds --overwrite --icon=./build/electron.icns"
   },
   "license": "MIT",
   "devDependencies": {

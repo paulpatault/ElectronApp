@@ -5,3 +5,5 @@ cmd.txt
 icon.icns
 schéma_appli.jpg
 release-builds
+yarn.lock
+package-lock.json
