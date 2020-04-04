@@ -79,7 +79,7 @@ function createWindow() {
   //mainWindow.setVibrancy("dark"); -> mode sombre
   mainWindow.setMaximizable(false);
 
-  //mainWindow.setResizable(false);
+  mainWindow.setResizable(false);
 
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'src/gui/index.html'),
@@ -95,15 +95,6 @@ function createWindow() {
   });
 
   require('./src/js/mainmenu.js');
-
-  /* 
-  mainWindow.on('resize', () => {
-    // The event doesn't pass us the window size, so we call the `getBounds` method which returns an object with
-    // the height, width, and x and y coordinates.
-    let { width, height } = mainWindow.getBounds();
-    // Now that we have them, save them using the `set` method.
-    store.set('windowBounds', { width, height });
-  }); */
 }
 
 // This method will be called when Electron has finished
