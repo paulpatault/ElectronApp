@@ -14,7 +14,7 @@ npm start
 
 ## Preview
 
-![Preview](preview/example1.png)
+![Preview image](preview/example1.png)![Preview image](preview/example2.png)![Preview image](preview/example3.png)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
