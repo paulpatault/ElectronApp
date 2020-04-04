@@ -1,5 +1,4 @@
 const { Store } = require('./store.js');
-var jsonfile;
 
 
 function loadData_() {
@@ -44,7 +43,7 @@ function loadData_() {
         mainPageOut += '<input type="image" src="images/icons/50/plus.png" class="right resize1" ';
         mainPageOut += 'data-toggle="modal" data-target="#zoomOnField"';
         const arg = "\'" + String(course["name"]) + "\'";
-        const action = "const { loadData_zoomField } = require('../load_data.js'); loadData_zoomField(" + arg + "); ";
+        const action = "const { loadData_zoomField } = require('../js/load_data.js'); loadData_zoomField(" + arg + "); ";
         mainPageOut += 'onclick="' + action + '"/>';
 
         mainPageOut += '</h6>';
@@ -59,7 +58,7 @@ function loadData_() {
             mainPageOut += '<div class="form-row form-check">';
             mainPageOut += '<div class="col-auto left">';
 
-            const cmd = "const { checker_ } = require('../writer.js'); checker_(); const { loadData_ } = require('../load_data.js'); loadData_();";
+            const cmd = "const { checker_ } = require('../js/writer.js'); checker_(); const { loadData_ } = require('../js/load_data.js'); loadData_();";
             const id = String(task["content"]) + String(task["date"])
             mainPageOut += '<input type="checkbox" class="form-check-input x-small" onclick="' + cmd + '" id="' + id + '"';
 
@@ -110,13 +109,6 @@ function loadData_zoomField(caller) {
             zoomModalContent += '</h6>';
 
             zoomModalContent += '<div class="card-body">';
-            /* 
-                        zoomModalContent += '<div class="input-group input-group-sm mb-3 form-row">';
-                        zoomModalContent += '<img src="images/icons/50/corbeille.png" class="zoomField" />';
-                        //zoomModalContent += '<input id="task-input" type="text" class="form-control" aria-label="Small"';
-                        //zoomModalContent += 'aria-describedby="inputGroup-sizing-xs" placeholder="Task Name">';
-                        zoomModalContent += '</div>';
-             */
 
             for (const task of course["tasks"]) {
                 zoomModalContent += '<form style="margin-bottom: 0;">';
@@ -126,7 +118,7 @@ function loadData_zoomField(caller) {
                 const sub_id = String(task["content"])
                 const arg = task["content"] + course["name"];
                 const args = "\'" + String(task["content"]) + "\'" + "," + "\'" + String(course["name"]) + "\'"
-                const cmd = "const { del_ } = require('../writer.js'); del_(" + args + "); const { loadData_ } = require('../load_data.js'); loadData_();";
+                const cmd = "const { del_ } = require('../js/writer.js'); del_(" + args + "); const { loadData_ } = require('../js/load_data.js'); loadData_();";
                 const id = "modal-" + sub_id + String(task["date"]);
 
                 zoomModalContent += '<input type="image" src="images/icons/50/corbeille.png" class="zoomField"';
@@ -155,19 +147,3 @@ loadData_()
 //setInterval(function () { alert("Hello"); }, 3000);
 
 module.exports = { loadData_, loadData_zoomField };
-/*
-<form style="margin-bottom: 0;">
-    <div class="form-row form-check">
-        <div class="col-auto left">
-            <input type="checkbox" class="form-check-input x-small" id="exampleCheck1">
-            <label class="form-check-label small" for="exampleCheck1">
-                EX
-            </label>
-        </div>
-        <div class="date right">
-            30/03
-        </div>
-    </div>
-</form>
-*/
-

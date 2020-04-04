@@ -2,57 +2,60 @@ const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
 
-const { Store } = require('./src/store.js');
+const { Store } = require('./src/js/store.js');
 
 let mainWindow
 
-// First instantiate the class
 const store = new Store({
-  // We'll call our data file 'user-preferences'
   configName: 'user-preferences',
   defaults: {
     windowBounds: { width: 300, height: 600 },
     data: {
       courses: [{
-        "name": "Algebre",
+        "name": "Calculus",
         "color": "#ffffcc",
         "tasks": [
           {
-            "content": "EXERCICES 9+10",
+            "content": "REVIEW COURSE",
             "date": "30/03",
-            "done": true
+            "done": false
           },
           {
-            "content": "REVOIR ALGEBRE",
+            "content": "EXERCISE 3.4",
             "date": "14/03",
-            "done": false
+            "done": true
           }
         ]
       },
       {
-        "name": "Japonais",
+        "name": "Japanese",
         "color": "#ffcccc",
         "tasks": [
           {
-            "content": "PREPARER SPEECH",
+            "content": "PREPARE SPEECH",
             "date": "23/05",
             "done": true
           },
           {
-            "content": "EXERCICE 2",
+            "content": "WORK ON THE EXAM",
             "date": "19/09",
             "done": false
           }
         ]
       },
       {
-        "name": "App",
+        "name": "Personal",
         "color": "#ccffcc",
         "tasks": [
           {
-            "content": "Modal in modal as scheme",
+            "content": "WORK OUT",
             "date": "../..",
-            "done": true
+            "done": false
+          },
+          {
+            "content": "READ 30 MINUTES",
+            "date": "../..",
+            "done": false
           }
         ]
       }]
@@ -65,7 +68,11 @@ function createWindow() {
   let { width, height } = store.get('windowBounds');
   store.set('windowBounds', { width, height });
 
-  mainWindow = new BrowserWindow({ width, height }); //transparent: true
+  mainWindow = new BrowserWindow({
+    width: width,
+    height: height
+    //icon: path.join(__dirname, 'build/logo.png')
+  }); //transparent: true
 
   mainWindow.setVibrancy("content");
 
@@ -75,7 +82,7 @@ function createWindow() {
   //mainWindow.setResizable(false);
 
   mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'src/gui/app-0.4.html'),
+    pathname: path.join(__dirname, 'src/gui/index.html'),
     protocol: 'file:',
     slashes: true
   }));
@@ -87,7 +94,7 @@ function createWindow() {
     mainWindow = null
   });
 
-  //require('./menu/mainmenu');
+  require('./src/js/mainmenu.js');
 
   /* 
   mainWindow.on('resize', () => {

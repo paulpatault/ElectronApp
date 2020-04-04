@@ -59,7 +59,7 @@
                             </select>
                         </div>
 
-                        <img src=" images/icons/50/plus.png" class="addField collapsed" data-toggle="collapse"
+                        <img src="images/icons/50/plus.png" class="addField collapsed" data-toggle="collapse"
                             data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" />
                     </div>
 
@@ -80,9 +80,9 @@
                         Add Task
                         <input type="image" src="images/icons/50/validation.png" class="validation" data-dismiss="modal"
                             onclick="
-                                        const { writer_ } = require('../writer.js'); 
+                                        const { writer_ } = require('../js/writer.js'); 
                                         writer_(); 
-                                        const { loadData_ } = require('../load_data.js');
+                                        const { loadData_ } = require('../js/load_data.js');
                                         loadData_();
                                     " />
                     </div>
@@ -92,13 +92,12 @@
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal : "zoom on field" -->
     <div class="modal fade" id="zoomOnField" tabindex="-1" role="dialog" aria-labelledby="zoomOnFieldLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content" id="zoomModalContent">
-                <!--     <p>coucou</p>
-             -->
+
             </div>
         </div>
     </div>
@@ -111,10 +110,8 @@
 
 
     <script>
-        require("../load_data.js");
-        //require("../writer.js");
+        require("../js/load_data.js");
     </script>
-    <script src="../writer.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
