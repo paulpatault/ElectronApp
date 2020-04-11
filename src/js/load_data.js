@@ -1,7 +1,25 @@
 const { Store } = require('./store.js');
 
+function loadCSS() {
+    const { Store } = require('./store.js');
+
+    const store = new Store({
+        configName: 'user-preferences',
+        defaults: {}
+    });
+
+    let style = '<link rel="stylesheet" href="css/style-small.css"></link>';
+    if (store.get('styleSize') != 'small') {
+        style = '<link rel="stylesheet" href="css/style-large.css"></link>';
+        document.getElementById('br?').innerHTML = '<br>';
+    }
+
+    document.getElementById('style_me_here').innerHTML = style;
+}
 
 function loadData_() {
+
+    //loadCSS(); 
 
     const store = new Store({
         configName: 'user-preferences',
@@ -11,34 +29,20 @@ function loadData_() {
 
 
     var mainPageOut = '';
-    var idx = 0;
     var fieldFormOut = '<option value="unselected" selected>Field</option>';
 
     for (const course of courses) {
+        //------------------------- MODAL
+        fieldFormOut += '<option value="' + course["name"] + '" style="font-size: small;">';
+        fieldFormOut += course["name"] + '</option>';
+
+        //------------------------- MAIN
+
 
         mainPageOut += '<div class="card mb-4" style="max-width: 18rem;" id>';
         //mainPageOut += '<h6 class="card-header back-' + course["color"] + '">';
-        mainPageOut += '<h6 class="card-header" style="background-color: ' + course["color"] + ';">';
+        mainPageOut += '<h6 class="card-header h7" style="background-color: ' + course["color"] + ';">';
         mainPageOut += course["name"];
-        /* 
-            class="collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" 
-
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#addTaskModal">
-                <div class="input-group input-group-sm mb-3 form-row">
-                    <img src="images/icons/50/menu.png" class="modal_att" />
-                    <input type="text" class="form-control" aria-label="Small"
-                        aria-describedby="inputGroup-sizing-xs" placeholder="Field Name">
-                </div>
-                <div class="input-group input-group-sm mb-3 form-row">
-                    <img src="images/icons/40/palette.png" class="modal_att" />
-                    <input type="color" class="dropdown-item hidden small form-control" aria-label="Small"
-                        aria-describedby="inputGroup-sizing-sm" value="#ccffcc">
-                </div>
-            </div>
-
-            <input type="image" src="images/icons/50/plus.png" class="topcorner" data-toggle="modal"
-        data-target="#addTaskModal" />
-        */
 
         mainPageOut += '<input type="image" src="images/icons/50/plus.png" class="right resize1" ';
         mainPageOut += 'data-toggle="modal" data-target="#zoomOnField"';
@@ -49,10 +53,6 @@ function loadData_() {
         mainPageOut += '</h6>';
         mainPageOut += '<div class="card-body">';
 
-        idx += 1;
-        fieldFormOut += '<option value="' + course["name"] + '" style="font-size: small;">';
-        fieldFormOut += course["name"] + '</option>';
-
         for (const task of course["tasks"]) {
             mainPageOut += '<form style="margin-bottom: 0;">';
             mainPageOut += '<div class="form-row form-check">';
@@ -60,11 +60,7 @@ function loadData_() {
 
             const cmd = "const { checker_ } = require('../js/writer.js'); checker_(); const { loadData_ } = require('../js/load_data.js'); loadData_();";
             const id = String(task["content"]) + String(task["date"])
-            mainPageOut += '<input type="checkbox" class="form-check-input x-small" onclick="' + cmd + '" id="' + id + '"';
-
-
-
-
+            mainPageOut += '<input type="checkbox" class="form-check-input xx-small" onclick="' + cmd + '" id="' + id + '"';
 
             if (task["done"]) {
                 mainPageOut += 'checked>';
@@ -82,7 +78,15 @@ function loadData_() {
     document.getElementById('main-page').innerHTML = mainPageOut;
     document.getElementById('field-form').innerHTML = fieldFormOut;
 
-    //loadData_zoomField("");
+
+
+    var style = '<link rel="stylesheet" href="css/style-small.css"></link>';
+    if (store.get('styleSize') != 'small') {
+        style = '<link rel="stylesheet" href="css/style-large.css"></link>';
+        document.getElementById('br?').innerHTML = '<br>';
+    }
+
+    document.getElementById('style_me_here').innerHTML += style;
 }
 
 function loadData_zoomField(caller) {
@@ -101,7 +105,7 @@ function loadData_zoomField(caller) {
         if (course["name"] == caller) {
             console.warn('in !');
 
-            zoomModalContent += '<h6 class="card-header" style="background-color: ' + course["color"] + ';">';
+            zoomModalContent += '<h6 class="card-header h7" style="background-color: ' + course["color"] + ';">';
             zoomModalContent += course["name"];
 
             zoomModalContent += '<input type="image" src="images/icons/50/back.png" class="zoomFieldBack" ';

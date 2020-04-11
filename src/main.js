@@ -2,14 +2,15 @@ const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
 
-const { Store } = require('./src/js/store.js');
+const { Store } = require('./js/store.js');
 
 let mainWindow
 
 const store = new Store({
   configName: 'user-preferences',
   defaults: {
-    windowBounds: { width: 300, height: 600 },
+    windowBounds: { width: 230, height: 300 },
+    styleSize: "small",
     data: {
       courses: [{
         "name": "Calculus",
@@ -70,37 +71,52 @@ function createWindow() {
 
   mainWindow = new BrowserWindow({
     width: width,
-    height: height
-    //icon: path.join(__dirname, 'build/logo.png')
+    height: height,
+    minWidth: width,
+    maxWidth: width,
+    minHeight: 0,
+    maximizable: false,
+    resizable: true,
+    vibrancy: "content",
+    title: "Patault ToDo"
   }); //transparent: true
 
-  mainWindow.setVibrancy("content");
 
   //mainWindow.setVibrancy("dark"); -> mode sombre
-  mainWindow.setMaximizable(false);
 
-  mainWindow.setResizable(false);
+  /* let index_url = 'gui/index-small.html';
+  if (store.get('styleSize') == "large") {
+    index_url = 'gui/index-large.html';
+  } */
+
+  let index_url = 'gui/index.html';
 
   mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'src/gui/index.html'),
+    pathname: path.join(__dirname, index_url),
     protocol: 'file:',
     slashes: true
   }));
 
+
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', function () {
     mainWindow = null
   });
 
-  require('./src/js/mainmenu.js');
+  /* mainWindow.on('resize', function () {
+    mainWindow.setBounds()
+  }); */
+
+  require('./js/mainmenu.js');
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
+
 
 
 app.on('window-all-closed', function () {

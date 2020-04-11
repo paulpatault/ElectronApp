@@ -1,0 +1,46 @@
+img.modal_att {
+  width: 25;
+  height: 25; 
+  margin-top: 3;
+  margin-right: 5;
+}
+
+input.xx-small {
+    font-size: 0.5em;
+}
+
+input.close {
+  position: absolute;
+  right: 4;
+  top: 7;
+  width: 1.4rem;
+}
+
+input.topcorner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1.3rem;
+  margin-bottom: 0rem;
+  padding-bottom: 0;
+}
+
+input.resize1 {
+  /* max-width:10%; */
+  width: 1.2rem;
+}
+
+input.zoomFieldBack {
+
+  width: 1.2rem;
+
+  position: absolute;
+  right: 10;
+  top: 8;
+}
+
+input.right {
+  position: absolute;
+  right: 4;
+  top: 7;
+}

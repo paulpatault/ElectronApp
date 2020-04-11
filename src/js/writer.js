@@ -203,5 +203,6 @@ function del_(task_content, course) {
     data.set('data', { "courses": courses });
 }
 
+
 module.exports = { writer_, checker_, del_ };
 

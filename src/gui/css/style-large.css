@@ -1,8 +1,11 @@
 @import url("modal.css");
 @import url("inputs.css");
 @import url("images.css");
+@import url("large.css");
 
-
+h6.h7 {
+  /* font-size: small; */
+}
 
 .left{
   text-align: left; 

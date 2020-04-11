@@ -7,11 +7,11 @@
   },
   "version": "1.0.0",
   "description": "A minimal Electron application",
-  "main": "main.js",
+  "main": "src/main.js",
   "scripts": {
     "start": "electron .",
-    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=./build/electron.icns --prune=true --out=release-builds",
-    "create-installer-mac": "electron-installer-dmg ./release-builds/Patault\\ todo-darwin-x64/Patault\\ todo.app patault-todo-app --out=release-builds --overwrite --icon=./build/electron.icns"
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=./assets/build/pack/electron.icns --prune=true --out=release-builds --ignore='assets' --ignore='\\.vscode' --ignore='\\.git(ignore|attributes)'",
+    "create-installer-mac": "electron-installer-dmg ./release-builds/Patault\\ todo-darwin-x64/Patault\\ todo.app patault-todo-app --out=release-builds --overwrite --background=./assets/build/dmg/background.png --icon=./assets/build/dmg/electron.icns"
   },
   "license": "MIT",
   "devDependencies": {
