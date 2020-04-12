@@ -79,9 +79,8 @@ function loadData_() {
     document.getElementById('field-form').innerHTML = fieldFormOut;
 
 
-
     var style = '<link rel="stylesheet" href="css/style-small.css"></link>';
-    if (store.get('styleSize') != 'small') {
+    if (store.get('styleSize') == 'large') {
         style = '<link rel="stylesheet" href="css/style-large.css"></link>';
         document.getElementById('br?').innerHTML = '<br>';
     }

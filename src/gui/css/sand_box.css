@@ -1,0 +1,112 @@
+@import url("bootstrap.min.css");
+
+
+body.modal-open .container{
+    -webkit-filter: blur(2px);
+    -moz-filter: blur(2px);
+    -o-filter: blur(2px);
+    -ms-filter: blur(2px);
+    filter: blur(2px);
+}
+
+.left{
+  text-align: left; 
+  width:75%; 
+  display: inline-block;
+}
+
+.right {
+  text-align: right; 
+  display: inline-block;
+}
+
+.date {
+  float: right;
+}
+
+
+img.resize1 {
+  /* max-width:10%; */
+  width: 1.5rem;
+}
+
+img.resize2 {
+  /* max-width:10%; */
+  width: 1.2rem;
+}
+
+img.right {
+  position: absolute;
+  right: 4;
+  top: 10;
+}
+
+img.addField {
+  margin: 5;
+  width: 20;
+  height: 20; 
+}
+
+img.addField:hover {
+  background-color: #ffcccc;
+}
+
+img.modal_att {
+  margin-right: 5;
+}
+
+input.topcorner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1.3rem;
+  margin-bottom: 0rem;
+  padding-bottom: 0;
+}
+
+input.right {
+  position: absolute;
+  right: 4;
+}
+
+input.small {
+    font-size: small;
+}
+
+input.x-small {
+    font-size: x-small;
+}
+
+input.addField {
+  margin: 5;
+  width: 20;
+  height: 20; 
+}
+
+input.addField:hover {
+  background-color: #ffcccc;
+}
+
+input.validation {
+  margin-left: 3;
+  width: 20;
+  height: 20; 
+  float: right;
+}
+
+input.zoomField {
+  width: 20;
+  height: 20; 
+  margin-top: 3;
+  margin-right : 3;
+}
+
+input.zoomFieldBack {
+  position: absolute;
+  right: 10;
+}
+
+input.close {
+  position: absolute;
+  right: 4;
+}

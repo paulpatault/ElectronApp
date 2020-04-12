@@ -64,7 +64,7 @@ class Utils {
 }
 
 class Inputs {
-    static course(courses) {
+    static course(courses, to_iter) {
         var course = document.getElementById('field-form').value;
         if (course != "unselected") {
             return {
@@ -82,6 +82,18 @@ class Inputs {
                 course: null,
                 add: true
             };;
+        }
+
+        for (const m_course of to_iter) {
+            if (course == String(m_course['name'])) {
+
+                alert("This field already exist");
+                return {
+                    n_courses: courses.getData(),
+                    course: null,
+                    add: false
+                };;
+            }
         }
 
         var color = document.getElementById('color-form').value;
@@ -133,7 +145,7 @@ function writer_() {
         return;
     }
 
-    var { n_courses, course, add } = Inputs.course(kourseC);
+    var { n_courses, course, add } = Inputs.course(kourseC, courses);
 
     if (!course) {
         return;
@@ -147,7 +159,7 @@ function writer_() {
     idx = kourseC.findIdx(course);
 
     if (idx == -1) {
-        alert('[SYSTEM ERROR] Please try again...');
+        swal('[SYSTEM ERROR] Please try again...', "error");
         return;
     }
 

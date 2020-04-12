@@ -1,45 +1,42 @@
-@import url("modal.css");
-@import url("inputs.css");
-@import url("images.css");
-@import url("large.css");
+img.modal_att {
+  width: 30;
+  height: 30; 
+}
+
+input.xx-small {
+    font-size: x-small;
+}
+
+input.close {
+  top: 10;
+  width: 1.5rem;
+}
+
+input.topcorner {
+  width: 1.7rem;
+}
+
+input.resize1 {
+  width: 1.5rem;
+}
+
+input.zoomFieldBack {
+  width: 1.3rem;
+  top: 13;
+}
+
+input.right {
+  top: 10;
+}
 
 h6.h7 {
   /* font-size: small; */
 }
 
-.left{
-  text-align: left; 
-  width:75%; 
-  display: inline-block;
-}
-
 .right {
-  text-align: right; 
   width:20%;  
-  display: inline-block;
 }
 
 .date {
   font-size: x-small;
-  float: right;
-}
-
-.back-yellow {
-  background-color: #ffffcc;
-}
-
-.back-red {
-  background-color: #ffcccc;
-}
-
-.back-purple {
-  background-color: #e6ccff;
-}
-
-.back-blue {
-  background-color: #cce6ff;
-}
-
-.back-green {
-  background-color: #ccffcc;
 }

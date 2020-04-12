@@ -1,10 +1,7 @@
 .DS_Store
 .vscode
 node_modules
-cmd.txt
-icon.icns
-schéma_appli.jpg
 release-builds
-yarn.lock
 package-lock.json
-old-versions
+assets/build/dmg/*.psd
+assets/old-versions
