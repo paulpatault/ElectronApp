@@ -84,9 +84,13 @@ class Inputs {
             };;
         }
 
-        for (const m_course of to_iter) {
-            if (course == String(m_course['name'])) {
+        //console.log(course, typeof course)
+        const course_lower = String.prototype.toLowerCase(course);
 
+        for (const m_course of to_iter) {
+            //console.log(m_course['name'], typeof m_course['name'])
+            const name = String.prototype.toLowerCase(m_course['name']);
+            if (course_lower == name) {
                 alert("This field already exist");
                 return {
                     n_courses: courses.getData(),

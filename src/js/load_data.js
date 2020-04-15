@@ -8,13 +8,16 @@ function loadCSS() {
         defaults: {}
     });
 
-    let style = '<link rel="stylesheet" href="css/style-small.css"></link>';
-    if (store.get('styleSize') != 'small') {
+    var style = '<link rel="stylesheet" href="css/style-small.css"></link>';
+    if (store.get('styleSize') == 'large') {
         style = '<link rel="stylesheet" href="css/style-large.css"></link>';
         document.getElementById('br?').innerHTML = '<br>';
     }
 
-    document.getElementById('style_me_here').innerHTML = style;
+    document.getElementById('style_me_here').innerHTML += style;
+
+    store.set('firstRun', false);
+
 }
 
 function loadData_() {
@@ -78,14 +81,9 @@ function loadData_() {
     document.getElementById('main-page').innerHTML = mainPageOut;
     document.getElementById('field-form').innerHTML = fieldFormOut;
 
-
-    var style = '<link rel="stylesheet" href="css/style-small.css"></link>';
-    if (store.get('styleSize') == 'large') {
-        style = '<link rel="stylesheet" href="css/style-large.css"></link>';
-        document.getElementById('br?').innerHTML = '<br>';
+    if (store.get('firstRun')) {
+        loadCSS();
     }
-
-    document.getElementById('style_me_here').innerHTML += style;
 }
 
 function loadData_zoomField(caller) {
@@ -149,4 +147,4 @@ loadData_()
 //setInterval(loadData(), 1000)
 //setInterval(function () { alert("Hello"); }, 3000);
 
-module.exports = { loadData_, loadData_zoomField };
+module.exports = { loadData_, loadData_zoomField, loadCSS };

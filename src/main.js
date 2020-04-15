@@ -4,13 +4,14 @@ const url = require('url');
 
 const { Store } = require('./js/store.js');
 
-let mainWindow
+let mainWindow;
 
 const store = new Store({
   configName: 'user-preferences',
   defaults: {
     windowBounds: { width: 230, height: 300 },
     styleSize: "small",
+    firstRun: true,
     data: {
       courses: [{
         "name": "Calculus",
@@ -68,6 +69,7 @@ function createWindow() {
 
   let { width, height } = store.get('windowBounds');
   store.set('windowBounds', { width, height });
+  store.set('firstRun', true);
 
   mainWindow = new BrowserWindow({
     width: width,
@@ -84,15 +86,8 @@ function createWindow() {
 
   //mainWindow.setVibrancy("dark"); -> mode sombre
 
-  /* let index_url = 'gui/index-small.html';
-  if (store.get('styleSize') == "large") {
-    index_url = 'gui/index-large.html';
-  } */
-
-  let index_url = 'gui/index.html';
-
   mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, index_url),
+    pathname: path.join(__dirname, 'gui/index.html'),
     protocol: 'file:',
     slashes: true
   }));
@@ -111,6 +106,7 @@ function createWindow() {
 
   require('./js/mainmenu.js');
 }
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

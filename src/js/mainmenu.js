@@ -159,7 +159,7 @@ const template = [
                         accelerator: 'CmdOrCtrl+Alt+S',
                         click() {
                             const { Store } = require('./store.js');
-                            //const { my_alert } = require('./methods.js');
+
                             const data = new Store({
                                 configName: 'user-preferences',
                                 defaults: {}
@@ -171,6 +171,7 @@ const template = [
                                 data.set('windowBounds', { width, height });
 
                                 data.set('styleSize', "small");
+                                data.set('firstRun', true);
 
                                 app.relaunch();
                                 app.exit(0);
@@ -182,7 +183,7 @@ const template = [
                         accelerator: 'CmdOrCtrl+Alt+L',
                         click() {
                             const { Store } = require('./store.js');
-                            //const { my_alert } = require('./methods.js');
+
                             const data = new Store({
                                 configName: 'user-preferences',
                                 defaults: {}
@@ -194,6 +195,7 @@ const template = [
                                 data.set('windowBounds', { width, height });
 
                                 data.set('styleSize', "large");
+                                data.set('firstRun', true);
 
                                 app.relaunch();
                                 app.exit(0);
@@ -206,13 +208,27 @@ const template = [
                 label: 'Reload',
                 accelerator: 'CmdOrCtrl+R',
                 click(item, focusedWindow) {
-                    if (focusedWindow) focusedWindow.reload()
+                    const { Store } = require('./store.js');
+                    const data = new Store({
+                        configName: 'user-preferences',
+                        defaults: {}
+                    });
+                    data.set('firstRun', true);
+
+                    if (focusedWindow) focusedWindow.reload();
                 }
             },
             {
                 label: 'Relaunch',
                 accelerator: 'CmdOrCtrl+Shift+R',
                 click(item, focusedWindow) {
+                    const { Store } = require('./store.js');
+                    const data = new Store({
+                        configName: 'user-preferences',
+                        defaults: {}
+                    });
+                    data.set('firstRun', true);
+
                     app.relaunch();
                     app.exit(0);
                 }
