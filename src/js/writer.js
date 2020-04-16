@@ -85,11 +85,12 @@ class Inputs {
         }
 
         //console.log(course, typeof course)
-        const course_lower = String.prototype.toLowerCase(course);
+        const course_lower = course.toLowerCase();
 
         for (const m_course of to_iter) {
             //console.log(m_course['name'], typeof m_course['name'])
-            const name = String.prototype.toLowerCase(m_course['name']);
+            const name = m_course['name'].toLowerCase();
+            //console.log(course_lower, name);
             if (course_lower == name) {
                 alert("This field already exist");
                 return {
