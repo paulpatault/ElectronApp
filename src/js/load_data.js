@@ -1,6 +1,7 @@
 const { Store } = require('./store.js');
 
 function loadCSS() {
+
     const { Store } = require('./store.js');
 
     const store = new Store({
@@ -14,36 +15,31 @@ function loadCSS() {
         document.getElementById('br?').innerHTML = '<br>';
     }
 
-    document.getElementById('style_me_here').innerHTML += style;
-
+    document.getElementById('style_me_here').innerHTML = '<link rel="stylesheet" href="./css/sand_box.css">' + style;
     store.set('firstRun', false);
-
 }
 
 function loadData_() {
-
-    //loadCSS(); 
 
     const store = new Store({
         configName: 'user-preferences',
         defaults: {}
     });
     const { courses } = store.get('data');
-
+    const fields = store.get('fields');
 
     var mainPageOut = '';
     var fieldFormOut = '<option value="unselected" selected>Field</option>';
 
+    for (const field of fields) {
+        fieldFormOut += '<option value="' + field['name'] + '" style="font-size: small;">';
+        fieldFormOut += field['name'] + '</option>';
+    }
+
+    document.getElementById('field-form').innerHTML = fieldFormOut;
+
     for (const course of courses) {
-        //------------------------- MODAL
-        fieldFormOut += '<option value="' + course["name"] + '" style="font-size: small;">';
-        fieldFormOut += course["name"] + '</option>';
-
-        //------------------------- MAIN
-
-
         mainPageOut += '<div class="card mb-4" style="max-width: 18rem;" id>';
-        //mainPageOut += '<h6 class="card-header back-' + course["color"] + '">';
         mainPageOut += '<h6 class="card-header h7" style="background-color: ' + course["color"] + ';">';
         mainPageOut += course["name"];
 
@@ -79,7 +75,6 @@ function loadData_() {
         mainPageOut += '</div></div>';
     }
     document.getElementById('main-page').innerHTML = mainPageOut;
-    document.getElementById('field-form').innerHTML = fieldFormOut;
 
     if (store.get('firstRun')) {
         loadCSS();
@@ -100,13 +95,13 @@ function loadData_zoomField(caller) {
 
     for (const course of courses) {
         if (course["name"] == caller) {
-            console.warn('in !');
 
             zoomModalContent += '<h6 class="card-header h7" style="background-color: ' + course["color"] + ';">';
             zoomModalContent += course["name"];
 
             zoomModalContent += '<input type="image" src="images/icons/50/back.png" class="zoomFieldBack" ';
-            zoomModalContent += 'data-toggle="modal" data-target="#zoomOnField"/>';
+            const cmd1 = "const { loadData_ } = require('../js/load_data.js'); loadData_();"
+            zoomModalContent += 'data-dismiss="modal" onclic="' + cmd1 + '"/>';
             zoomModalContent += '</h6>';
 
             zoomModalContent += '<div class="card-body">';
@@ -116,11 +111,15 @@ function loadData_zoomField(caller) {
                 zoomModalContent += '<div class="form-row form-check">';
                 zoomModalContent += '<div class="col-auto left">';
 
-                const sub_id = String(task["content"])
-                const arg = task["content"] + course["name"];
-                const args = "\'" + String(task["content"]) + "\'" + "," + "\'" + String(course["name"]) + "\'"
-                const cmd = "const { del_ } = require('../js/writer.js'); del_(" + args + "); const { loadData_ } = require('../js/load_data.js'); loadData_();";
-                const id = "modal-" + sub_id + String(task["date"]);
+                const args = "\'" + String(task["content"]) + "\'" + "," + "\'" + String(course["name"]) + "\'";
+
+                var cmd_store = "const { Store } = require('../js/store.js');";
+                cmd_store += "const store = new Store({ configName: 'user-preferences',defaults: { }});";
+                cmd_store += "store.set('firstRun', true);";
+
+                var cmd = "const { del_ } = require('../js/writer.js'); del_(" + args + ");";
+                cmd += cmd_store;
+                const id = "modal-" + String(task["content"]) + String(task["date"]);
 
                 zoomModalContent += '<input type="image" src="images/icons/50/corbeille.png" class="zoomField"';
                 zoomModalContent += 'onclick="' + cmd + '" id="' + id + '">';

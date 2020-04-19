@@ -12,6 +12,18 @@ const store = new Store({
     windowBounds: { width: 230, height: 300 },
     styleSize: "small",
     firstRun: true,
+    fields: [{
+      "name": "Calculus",
+      "color": "#ffffcc"
+    },
+    {
+      "name": "Japanese",
+      "color": "#ffcccc"
+    },
+    {
+      "name": "Personal",
+      "color": "#ccffcc"
+    }],
     data: {
       courses: [{
         "name": "Calculus",
@@ -75,7 +87,7 @@ function createWindow() {
     width: width,
     height: height,
     minWidth: width,
-    maxWidth: width,
+    //maxWidth: width,
     minHeight: 0,
     maximizable: false,
     resizable: true,
@@ -94,7 +106,7 @@ function createWindow() {
 
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', function () {
     mainWindow = null
@@ -107,10 +119,6 @@ function createWindow() {
   require('./js/mainmenu.js');
 }
 
-
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
 
 
@@ -127,6 +135,30 @@ app.on('activate', function () {
   }
 });
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
 
+function more() {
+  let { width, height } = store.get('windowBounds');
+
+  const { BrowserWindow } = require('electron');
+  let child = new BrowserWindow({
+    width: width * 0.7,
+    height: height * 0.8,
+    parent: mainWindow,
+    modal: true,
+    show: false,
+    resizable: true
+  }); //parent: mainWindow, modal: true, show: false });
+  child.webContents.openDevTools();
+
+  child.loadURL(url.format({
+    pathname: path.join(__dirname, 'gui/html/fields.html'),
+    protocol: 'file:',
+    slashes: true
+  }));
+  /* child.once('ready-to-show', () => {
+    child.show();
+  }); */
+  return child;
+}
+
+module.exports = { more }; 

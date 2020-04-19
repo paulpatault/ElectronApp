@@ -1,5 +1,6 @@
 const { Menu, app } = require('electron')
 //const { openModal_ } = require('./methods.js');
+let child = null;
 
 const template0 = [
     {
@@ -109,19 +110,45 @@ const template0 = [
 
 
 const template = [
-    /* 
     {
         label: 'Edit',
         submenu: [
             {
+                label: 'Delete Field',
+                submenu: [
+                    {
+                        label: 'Open Menu',
+                        accelerator: 'CmdOrCtrl+Shift+X',
+                        click() {
+                            if (!child) {
+                                const { more } = require('../main.js');
+                                child = more();
+                            }
+                            child.webContents.openDevTools();
+                            child.show();
+                        }
+                    },
+                    {
+                        label: 'Close Menu',
+                        accelerator: 'Esc',
+                        click() {
+                            if (child) {
+                                child.close();
+                                child = null;
+                            }
+                        }
+                    }
+                ]
+            }
+            /* {
                 label: 'New task',
                 accelerator: 'CmdOrCtrl+N',
                 click() {
                     openModal_();
                 }
-            }
+            } */
         ]
-    }, */
+    },
     {
         label: 'Options',
         submenu: [

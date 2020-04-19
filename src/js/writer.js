@@ -1,46 +1,4 @@
-class Course {
-    constructor(data) {
-        this.data = data;
-    }
-
-    mset(ndata) {
-        this.data = ndata
-    }
-
-    getData() {
-        return this.data
-    }
-
-    findIdx(tofind) {
-        var idx = 0;
-        for (const course of this.data) {
-            if (tofind == course.name) {
-                return idx;
-            }
-            idx += 1;
-        }
-        return -1;
-    }
-
-    addTask(idx, task) {
-        this.data[idx]["tasks"].push(task);
-        return this.data
-    }
-
-    addCourse(name, color, tasks) {
-        var course = {
-            "name": name,
-            "color": color,
-            "tasks": tasks
-        };
-        this.data.push(course);
-        return this.data;
-    }
-
-    check() {
-
-    }
-}
+const { Course } = require("./course.js");
 
 class Utils {
     static cleanDate(date) {
@@ -66,6 +24,9 @@ class Utils {
 class Inputs {
     static course(courses, to_iter) {
         var course = document.getElementById('field-form').value;
+        //var color = document.getElementById('color-form').value;
+        courses.addCourse(course, null, []);
+
         if (course != "unselected") {
             return {
                 n_courses: courses.getData(),
@@ -75,7 +36,7 @@ class Inputs {
         }
         course = document.getElementById('new-field-form').value;
 
-        if (course == "") {
+        if (course == "" || course == " ") {
             alert("Please select a field");
             return {
                 n_courses: courses.getData(),
@@ -84,13 +45,10 @@ class Inputs {
             };;
         }
 
-        //console.log(course, typeof course)
         const course_lower = course.toLowerCase();
 
         for (const m_course of to_iter) {
-            //console.log(m_course['name'], typeof m_course['name'])
             const name = m_course['name'].toLowerCase();
-            //console.log(course_lower, name);
             if (course_lower == name) {
                 alert("This field already exist");
                 return {
@@ -142,15 +100,16 @@ function writer_() {
     });
 
     let { courses } = data.get('data');
+    let fields = data.get('fields');
 
-    let kourseC = new Course(courses);
+    let kourseC = new Course(courses, fields);
 
     var new_task = Inputs.task();
     if (!new_task) {
         return;
     }
 
-    var { n_courses, course, add } = Inputs.course(kourseC, courses);
+    var { n_courses, course, add } = Inputs.course(kourseC, fields);
 
     if (!course) {
         return;
@@ -164,7 +123,7 @@ function writer_() {
     idx = kourseC.findIdx(course);
 
     if (idx == -1) {
-        swal('[SYSTEM ERROR] Please try again...', "error");
+        swal('[SYSTEM ERROR]', 'Please try again...', "error");
         return;
     }
 
@@ -192,20 +151,18 @@ function checker_() {
             }
         }
     }
-
     data.set('data', { "courses": courses });
 }
 
 function del_(task_content, course) {
 
     const { Store } = require('./store.js');
-
-    const data = new Store({
+    const store = new Store({
         configName: 'user-preferences',
         defaults: {}
     });
 
-    let { courses } = data.get('data');
+    let { courses } = store.get('data');
 
     let kourseC = new Course(courses);
 
@@ -217,9 +174,8 @@ function del_(task_content, course) {
         courses = Utils.mremove(courses, course, "name");
     }
 
-    data.set('data', { "courses": courses });
+    store.set('data', { "courses": courses });
 }
-
 
 module.exports = { writer_, checker_, del_ };
 
