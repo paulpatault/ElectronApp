@@ -22,7 +22,7 @@ function createWindow() {
     width: width,
     height: height,
     minWidth: width,
-    maxWidth: width,
+    //maxWidth: width,
     minHeight: 0,
     maximizable: false,
     resizable: true,
@@ -46,7 +46,7 @@ function createWindow() {
   });
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', function () {
     mainWindow = null

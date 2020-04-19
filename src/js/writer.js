@@ -169,6 +169,10 @@ function del_(task_content, course) {
 
     if (courses[idx]["tasks"].length == 0) {
         courses = Utils.mremove(courses, course, "name");
+        const electron = require('electron');
+        const BrowserWindow = electron.remote.BrowserWindow;
+        BrowserWindow.getFocusedWindow().reload();
+        store.set('firstRun', true);
     }
 
     store.set('data', { "courses": courses });

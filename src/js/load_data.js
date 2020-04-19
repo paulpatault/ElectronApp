@@ -193,48 +193,47 @@ function loadData_zoomField(caller) {
         inputBack.setAttribute('data-dismiss', 'modal');
         h6Title.appendChild(inputBack);
 
-        var divCardBody = document.createElement("div");
-        divCardBody.classList.add('card-body');
+        var ulContainer = document.createElement("ul");
+        ulContainer.classList.add('list-group');
 
         for (const task of course["tasks"]) {
-            var form = document.createElement("form");
-            form.style.marginBottom = '0';
-
-            var divFormRow = document.createElement("div");
-            divFormRow.classList.add('form-row', 'form-check');
-
-            var divLeft = document.createElement("div");
-            divLeft.classList.add('col-auto', 'left');
+            var item = document.createElement('li');
+            item.classList.add('list-group-item');
+            item.style.fontSize = 'small';
+            item.style.padding = '2';
 
             var inputCorbeille = document.createElement("input");
+            inputCorbeille.style.margin = '5';
+            inputCorbeille.style.marginLeft = '10';
+
             inputCorbeille.type = 'image';
             inputCorbeille.src = "images/icons/50/corbeille.png";
             inputCorbeille.classList.add('zoomField');
             inputCorbeille.onclick = () => {
                 const { del_ } = require('./writer.js');
                 del_(task["content"], course["name"]);
-                const { Store } = require('../js/store.js');
-                const store = new Store({ configName: 'user-preferences', defaults: {} });
-                store.set('firstRun', true);
+                loadData_zoomField(course["name"]);
             }
             inputCorbeille.id = "modal-" + String(task["content"]) + String(task["date"]);
 
+            var divRow = document.createElement('div');
+            divRow.classList.add('form-row');
+            divRow.appendChild(inputCorbeille);
 
-            var labelTask = document.createElement("label");
-            labelTask.classList.add('form-check-label', 'small');
-            labelTask.textContent = task["content"];
+            var p = document.createElement('div');
+            p.textContent = task["content"];
             if (task["done"]) {
-                labelTask.style.textDecoration = "line-through";
+                p.style.textDecoration = "line-through";
             }
+            p.style.marginTop = '5';
+            p.style.marginLeft = '5';
+            divRow.appendChild(p);
 
-            divLeft.appendChild(inputCorbeille);
-            divLeft.appendChild(labelTask);
-            divFormRow.appendChild(divLeft);
-            form.appendChild(divFormRow);
-            divCardBody.appendChild(form);
+            item.appendChild(divRow);
+            ulContainer.appendChild(item);
         }
         main.appendChild(h6Title);
-        main.appendChild(divCardBody);
+        main.appendChild(ulContainer);
     }
 }
 
