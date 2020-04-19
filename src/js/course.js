@@ -99,21 +99,28 @@ class Course {
         var nfield = [];
         var ncourse = [];
         const nname = name.toLowerCase();
+        console.log(this.fields);
+
         for (const field of this.fields) {
             const fname = field['name'].toLowerCase();
-            if (nname != fname) {
-                nfield.push(field);
+            if (nname == fname) {
+                continue;
             }
+            nfield.push({
+                "name": field['name'],
+                "color": field['color']
+            });
         }
         for (const course of this.courses) {
             const cname = course['name'].toLowerCase();
-            if (nname != cname) {
-                ncourse.push(course);
+            if (nname == cname) {
+                continue;
             }
+            ncourse.push(course);
         }
-        this.field = nfield;
-        this.courses = ncourse;
-        return nfield;
+        this.fields = nfield.slice();
+        this.courses = ncourse.slice();
+        return { d_fields: this.fields, d_courses: this.courses };
     }
 }
 

@@ -1,5 +1,6 @@
-const { Menu, app } = require('electron')
-//const { openModal_ } = require('./methods.js');
+const { Menu, app } = require('electron');
+const { Store } = require('./store.js');
+
 let child = null;
 
 const template0 = [
@@ -108,7 +109,6 @@ const template0 = [
     }
 ]
 
-
 const template = [
     {
         label: 'Edit',
@@ -121,11 +121,12 @@ const template = [
                         accelerator: 'CmdOrCtrl+Shift+X',
                         click() {
                             if (!child) {
-                                const { more } = require('../main.js');
-                                child = more();
+                                const { fieldsModal } = require('../main.js');
+                                child = fieldsModal();
                             }
-                            child.webContents.openDevTools();
-                            child.show();
+                            child.once('ready-to-show', () => {
+                                child.show()
+                            });
                         }
                     },
                     {
@@ -135,6 +136,13 @@ const template = [
                             if (child) {
                                 child.close();
                                 child = null;
+                                const data = new Store({
+                                    configName: 'user-preferences',
+                                    defaults: {}
+                                });
+                                data.set('firstRun', true);
+                                const { mainReload } = require('../main.js');
+                                mainReload();
                             }
                         }
                     }
@@ -185,7 +193,6 @@ const template = [
                         label: 'small',
                         accelerator: 'CmdOrCtrl+Alt+S',
                         click() {
-                            const { Store } = require('./store.js');
 
                             const data = new Store({
                                 configName: 'user-preferences',
@@ -209,8 +216,6 @@ const template = [
                         label: 'large',
                         accelerator: 'CmdOrCtrl+Alt+L',
                         click() {
-                            const { Store } = require('./store.js');
-
                             const data = new Store({
                                 configName: 'user-preferences',
                                 defaults: {}
@@ -235,7 +240,6 @@ const template = [
                 label: 'Reload',
                 accelerator: 'CmdOrCtrl+R',
                 click(item, focusedWindow) {
-                    const { Store } = require('./store.js');
                     const data = new Store({
                         configName: 'user-preferences',
                         defaults: {}
@@ -249,7 +253,6 @@ const template = [
                 label: 'Relaunch',
                 accelerator: 'CmdOrCtrl+Shift+R',
                 click(item, focusedWindow) {
-                    const { Store } = require('./store.js');
                     const data = new Store({
                         configName: 'user-preferences',
                         defaults: {}

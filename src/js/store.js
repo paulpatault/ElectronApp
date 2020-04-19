@@ -39,5 +39,80 @@ function parseDataFile(filePath, defaults) {
     }
 }
 
-// expose the class
-module.exports = { Store: Store };
+const fields = [{
+    "name": "Calculus",
+    "color": "#ffffcc"
+},
+{
+    "name": "Japanese",
+    "color": "#ffcccc"
+},
+{
+    "name": "Personal",
+    "color": "#ccffcc"
+}];
+const data = {
+    courses: [{
+        "name": "Calculus",
+        "color": "#ffffcc",
+        "tasks": [
+            {
+                "content": "REVIEW COURSE",
+                "date": "30/03",
+                "done": false
+            },
+            {
+                "content": "EXERCISE 3.4",
+                "date": "14/03",
+                "done": true
+            }
+        ]
+    },
+    {
+        "name": "Japanese",
+        "color": "#ffcccc",
+        "tasks": [
+            {
+                "content": "PREPARE SPEECH",
+                "date": "23/05",
+                "done": true
+            },
+            {
+                "content": "WORK ON THE EXAM",
+                "date": "19/09",
+                "done": false
+            }
+        ]
+    },
+    {
+        "name": "Personal",
+        "color": "#ccffcc",
+        "tasks": [
+            {
+                "content": "WORK OUT",
+                "date": "../..",
+                "done": false
+            },
+            {
+                "content": "READ 30 MINUTES",
+                "date": "../..",
+                "done": false
+            }
+        ]
+    }]
+};
+const firstRun = true;
+const windowBounds = { width: 230, height: 300 };
+const styleSize = "small";
+
+const defaults = {
+    windowBounds: windowBounds,
+    styleSize: styleSize,
+    firstRun: firstRun,
+    fields: fields,
+    data: data
+}
+
+module.exports = {
+    Store: Store, defaults, windowBounds, styleSize, firstRun, fields, data
+}
