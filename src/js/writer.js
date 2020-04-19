@@ -1,4 +1,5 @@
 const { Course } = require("./course.js");
+const { Store } = require('./store.js');
 
 class Utils {
     static cleanDate(date) {
@@ -92,8 +93,6 @@ class Inputs {
 }
 
 function writer_() {
-    const { Store } = require('./store.js');
-
     const data = new Store({
         configName: 'user-preferences',
         defaults: {}
@@ -132,7 +131,6 @@ function writer_() {
 }
 
 function checker_() {
-    const { Store } = require('./store.js');
 
     const data = new Store({
         configName: 'user-preferences',
@@ -156,7 +154,6 @@ function checker_() {
 
 function del_(task_content, course) {
 
-    const { Store } = require('./store.js');
     const store = new Store({
         configName: 'user-preferences',
         defaults: {}

@@ -1,21 +1,38 @@
 const { Store } = require('./store.js');
 
 function loadCSS() {
-
-    const { Store } = require('./store.js');
-
     const store = new Store({
         configName: 'user-preferences',
         defaults: {}
     });
 
-    var style = '<link rel="stylesheet" href="css/style-small.css"></link>';
-    if (store.get('styleSize') == 'large') {
-        style = '<link rel="stylesheet" href="css/style-large.css"></link>';
-        document.getElementById('br?').innerHTML = '<br>';
+    var style = document.getElementById('style_me_here');
+    while (style.firstChild) {
+        style.removeChild(style.firstChild);
+    }
+    var breaker = document.getElementById('br?');
+    while (breaker.firstChild) {
+        breaker.removeChild(breaker.firstChild);
     }
 
-    document.getElementById('style_me_here').innerHTML = '<link rel="stylesheet" href="./css/sand_box.css">' + style;
+
+    var sandbox = document.createElement('link');
+    sandbox.rel = "stylesheet";
+    sandbox.href = "./css/sandbox.css";
+
+    var linkStyle = document.createElement('link');
+    linkStyle.rel = "stylesheet";
+
+    if (store.get('styleSize') == 'small') {
+        linkStyle.href = "./css/style-small.css";
+    } else {
+        breaker.appendChild(document.createElement('br'));
+        linkStyle.href = "css/style-large.css";
+    }
+
+    style.appendChild(sandbox);
+    style.appendChild(linkStyle);
+
     store.set('firstRun', false);
 }
 
@@ -25,56 +42,117 @@ function loadData_() {
         configName: 'user-preferences',
         defaults: {}
     });
-    const { courses } = store.get('data');
-    const fields = store.get('fields');
 
-    var mainPageOut = '';
-    var fieldFormOut = '<option value="unselected" selected>Field</option>';
+    /////////// FIELDS IN MODAL ///////////
+    const fields = store.get('fields');
+    var fieldsMain = document.getElementById('field-form');
+    while (fieldsMain.firstChild) {
+        fieldsMain.removeChild(fieldsMain.firstChild);
+    }
+
+    var optionElt = document.createElement('option');
+    optionElt.value = "unselected";
+    optionElt.setAttribute('selected', '');
+    optionElt.textContent = 'Field';
+    fieldsMain.appendChild(optionElt);
 
     for (const field of fields) {
-        fieldFormOut += '<option value="' + field['name'] + '" style="font-size: small;">';
-        fieldFormOut += field['name'] + '</option>';
+        optionElt = document.createElement('option');
+        optionElt.value = String(field['name']);
+        optionElt.style.fontSize = "small";
+        optionElt.textContent = String(field['name']);
+        fieldsMain.appendChild(optionElt);
     }
 
-    document.getElementById('field-form').innerHTML = fieldFormOut;
+
+    /////////// MAIN ///////////
+    const { courses } = store.get('data');
+
+    var main = document.getElementById('main-page');
+    while (main.firstChild) {
+        main.removeChild(main.firstChild);
+    }
 
     for (const course of courses) {
-        mainPageOut += '<div class="card mb-4" style="max-width: 18rem;" id>';
-        mainPageOut += '<h6 class="card-header h7" style="background-color: ' + course["color"] + ';">';
-        mainPageOut += course["name"];
 
-        mainPageOut += '<input type="image" src="images/icons/50/plus.png" class="right resize1" ';
-        mainPageOut += 'data-toggle="modal" data-target="#zoomOnField"';
-        const arg = "\'" + String(course["name"]) + "\'";
-        const action = "const { loadData_zoomField } = require('../js/load_data.js'); loadData_zoomField(" + arg + "); ";
-        mainPageOut += 'onclick="' + action + '"/>';
+        var divCard = document.createElement("div");
+        divCard.classList.add('card', 'mb-4');
+        divCard.style.maxWidth = '18rem';
 
-        mainPageOut += '</h6>';
-        mainPageOut += '<div class="card-body">';
+
+        var h6Title = document.createElement("h6");
+        h6Title.classList.add('card-header', 'h7');
+        h6Title.style.backgroundColor = (course["color"]);
+
+        h6Title.textContent = course["name"];
+
+        var inputZoomF = document.createElement("input");
+        inputZoomF.type = "image";
+        inputZoomF.src = "images/icons/50/plus.png";
+        inputZoomF.classList.add('right', 'resize1');
+        inputZoomF.setAttribute('data-toggle', 'modal');
+        inputZoomF.setAttribute('data-target', '#zoomOnField');
+        inputZoomF.onclick = () => {
+            loadData_zoomField(course["name"]);
+        };
+
+        h6Title.appendChild(inputZoomF)
+        divCard.appendChild(h6Title);
+
+        var divCardBody = document.createElement("div");
+        divCardBody.classList.add('card-body');
 
         for (const task of course["tasks"]) {
-            mainPageOut += '<form style="margin-bottom: 0;">';
-            mainPageOut += '<div class="form-row form-check">';
-            mainPageOut += '<div class="col-auto left">';
+            var form = document.createElement("form");
+            var divFormRow = document.createElement("div");
+            var divLeft = document.createElement("div");
+            var checkbox = document.createElement("input");
+            var labelTask = document.createElement("label");
+            var divDate = document.createElement("div");
 
-            const cmd = "const { checker_ } = require('../js/writer.js'); checker_(); const { loadData_ } = require('../js/load_data.js'); loadData_();";
-            const id = String(task["content"]) + String(task["date"])
-            mainPageOut += '<input type="checkbox" class="form-check-input xx-small" onclick="' + cmd + '" id="' + id + '"';
+            form.style.marginBottom = '0';
 
+            divFormRow.classList.add('form-row', 'form-check');
+
+            divLeft.classList.add('col-auto', 'left');
+
+
+            const _id2 = String(task["content"]) + String(task["date"])
+
+            checkbox.type = "checkbox";
+            checkbox.classList.add('form-check-input', 'xx-small');
+            checkbox.id = _id2;
+            checkbox.onclick = () => {
+                const { checker_ } = require('./writer.js');
+                checker_();
+                loadData_();
+            };
+
+            labelTask.classList.add('form-check-label', 'small');
+            labelTask.setAttribute('for', 'exampleCheck1')
             if (task["done"]) {
-                mainPageOut += 'checked>';
-                mainPageOut += '<label class="form-check-label small" style="text-decoration: line-through;" for="exampleCheck1">';
-            } else {
-                mainPageOut += '>';
-                mainPageOut += '<label class="form-check-label small" for="exampleCheck1">';
+                checkbox.setAttribute('checked', '');
+                labelTask.style.textDecoration = 'line-through';
             }
-            mainPageOut += task["content"] + '</label></div>';
-            mainPageOut += '<div class="date right">' + task["date"] + '</div>';
-            mainPageOut += '</div></form>';
+            labelTask.textContent = String(task["content"]);
+
+            divLeft.appendChild(checkbox);
+            divLeft.appendChild(labelTask);
+            divFormRow.appendChild(divLeft);
+
+
+            divDate.classList.add('date', 'right');
+            divDate.textContent = String(task["date"]);
+
+            divFormRow.appendChild(divDate);
+            form.appendChild(divFormRow);
+            divCardBody.appendChild(form);
         }
-        mainPageOut += '</div></div>';
+        divCard.appendChild(divCardBody);
+        main.appendChild(divCard);
     }
-    document.getElementById('main-page').innerHTML = mainPageOut;
+
+
 
     if (store.get('firstRun')) {
         loadCSS();
@@ -82,7 +160,6 @@ function loadData_() {
 }
 
 function loadData_zoomField(caller) {
-
     console.log("Caller : " + String(caller));
     const store = new Store({
         configName: 'user-preferences',
@@ -91,53 +168,74 @@ function loadData_zoomField(caller) {
 
     const { courses } = store.get('data');
 
-    var zoomModalContent = '';
+    var main = document.getElementById('zoomModalContent');
+    while (main.firstChild) {
+        main.removeChild(main.firstChild);
+    }
 
     for (const course of courses) {
-        if (course["name"] == caller) {
-
-            zoomModalContent += '<h6 class="card-header h7" style="background-color: ' + course["color"] + ';">';
-            zoomModalContent += course["name"];
-
-            zoomModalContent += '<input type="image" src="images/icons/50/back.png" class="zoomFieldBack" ';
-            const cmd1 = "const { loadData_ } = require('../js/load_data.js'); loadData_();"
-            zoomModalContent += 'data-dismiss="modal" onclic="' + cmd1 + '"/>';
-            zoomModalContent += '</h6>';
-
-            zoomModalContent += '<div class="card-body">';
-
-            for (const task of course["tasks"]) {
-                zoomModalContent += '<form style="margin-bottom: 0;">';
-                zoomModalContent += '<div class="form-row form-check">';
-                zoomModalContent += '<div class="col-auto left">';
-
-                const args = "\'" + String(task["content"]) + "\'" + "," + "\'" + String(course["name"]) + "\'";
-
-                var cmd_store = "const { Store } = require('../js/store.js');";
-                cmd_store += "const store = new Store({ configName: 'user-preferences',defaults: { }});";
-                cmd_store += "store.set('firstRun', true);";
-
-                var cmd = "const { del_ } = require('../js/writer.js'); del_(" + args + ");";
-                cmd += cmd_store;
-                const id = "modal-" + String(task["content"]) + String(task["date"]);
-
-                zoomModalContent += '<input type="image" src="images/icons/50/corbeille.png" class="zoomField"';
-                zoomModalContent += 'onclick="' + cmd + '" id="' + id + '">';
-
-
-                if (task["done"]) {
-                    zoomModalContent += '<label class="form-check-label small" style="text-decoration: line-through;" for="">';
-                } else {
-                    zoomModalContent += '<label class="form-check-label small" for="">';
-                }
-                zoomModalContent += task["content"] + '</label></div>';
-                //zoomModalContent += '<div class="date right">' + task["date"] + '</div>';
-                zoomModalContent += '</div></form>';
-            }
-            zoomModalContent += '</div>';
+        if (course["name"] != caller) {
+            continue;
         }
+
+        var h6Title = document.createElement("h6");
+        h6Title.classList.add('card-header', 'h7');
+        h6Title.style.backgroundColor = (course["color"]);
+        h6Title.textContent = course["name"];
+
+        var inputBack = document.createElement("input");
+        inputBack.type = "image";
+        inputBack.src = "images/icons/50/back.png";
+        inputBack.classList.add('zoomFieldBack');
+        inputBack.onclick = () => {
+            loadData_();
+        }
+        inputBack.setAttribute('data-dismiss', 'modal');
+        h6Title.appendChild(inputBack);
+
+        var divCardBody = document.createElement("div");
+        divCardBody.classList.add('card-body');
+
+        for (const task of course["tasks"]) {
+            var form = document.createElement("form");
+            form.style.marginBottom = '0';
+
+            var divFormRow = document.createElement("div");
+            divFormRow.classList.add('form-row', 'form-check');
+
+            var divLeft = document.createElement("div");
+            divLeft.classList.add('col-auto', 'left');
+
+            var inputCorbeille = document.createElement("input");
+            inputCorbeille.type = 'image';
+            inputCorbeille.src = "images/icons/50/corbeille.png";
+            inputCorbeille.classList.add('zoomField');
+            inputCorbeille.onclick = () => {
+                const { del_ } = require('./writer.js');
+                del_(task["content"], course["name"]);
+                const { Store } = require('../js/store.js');
+                const store = new Store({ configName: 'user-preferences', defaults: {} });
+                store.set('firstRun', true);
+            }
+            inputCorbeille.id = "modal-" + String(task["content"]) + String(task["date"]);
+
+
+            var labelTask = document.createElement("label");
+            labelTask.classList.add('form-check-label', 'small');
+            labelTask.textContent = task["content"];
+            if (task["done"]) {
+                labelTask.style.textDecoration = "line-through";
+            }
+
+            divLeft.appendChild(inputCorbeille);
+            divLeft.appendChild(labelTask);
+            divFormRow.appendChild(divLeft);
+            form.appendChild(divFormRow);
+            divCardBody.appendChild(form);
+        }
+        main.appendChild(h6Title);
+        main.appendChild(divCardBody);
     }
-    document.getElementById('zoomModalContent').innerHTML = zoomModalContent;
 }
 
 
