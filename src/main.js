@@ -28,9 +28,10 @@ function createWindow() {
     resizable: true,
     vibrancy: "content",
     title: "Patault ToDo",
-    show: false
+    show: false,
+    //titleBarStyle: 'hidden',
+    //frame: false
   }); //transparent: true
-
 
   //mainWindow.setVibrancy("dark"); -> mode sombre
 
